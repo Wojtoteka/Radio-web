@@ -181,6 +181,11 @@
             border: none;
             border-radius: 10px;
         }
+        .invert-iframe {
+            filter: invert(1) hue-rotate(180deg);
+            background: #fff !important;
+            color: #111 !important;
+        }
     </style>
 </head>
 <body>
@@ -197,7 +202,7 @@
     <div id="historyModal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="hideHistory()">&times;</button>
-            <iframe class="history-iframe" 
+            <iframe class="history-iframe invert-iframe" 
                     src="https://fm.wojtoteka.ovh/public/radio/history?theme=light" 
                     frameborder="0">
             </iframe>
