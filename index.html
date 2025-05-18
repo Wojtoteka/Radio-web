@@ -4,76 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Wojtoteka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="https://wojtoteka.ovh/img/logo.png" type="image/png">
     <style>
+        :root {
+            --bg-url: url('img/tlo.jpg');
+            --container-bg: rgba(20, 20, 22, 0.85);
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent-color: #007bff;
+            --accent-hover: #0056b3;
+            --font-family-main: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border-radius-main: 12px;
+            --border-radius-large: 15px;
+            --shadow-main: 0 8px 25px rgba(0, 0, 0, 0.5);
+            --modal-bg: rgba(10, 10, 12, 0.9);
+        }
+
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url('img/tlo.jpg') no-repeat center center/cover;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
+            flex-direction: column; /* Układa elementy (main-content-wrapper i footer) w kolumnie */
+            min-height: 100vh;     /* Minimalna wysokość body to cała wysokość ekranu */
+            background: var(--bg-url) no-repeat center center/cover;
+            font-family: var(--font-family-main);
+            color: var(--text-primary);
         }
+        .main-content-wrapper {
+            flex-grow: 1; /* Pozwala tej sekcji zająć dostępną przestrzeń pionową */
+            display: flex;
+            justify-content: center; /* Centruje .radio-container w poziomie */
+            align-items: center;     /* Centruje .radio-container w pionie */
+            width: 100%;
+            padding: 20px 0; /* Dodaje trochę przestrzeni na górze i na dole, jeśli kontener jest wysoki */
+        }
+
         .radio-container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 30px 30px 15px; /* Zmniejszono padding dolny */
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: var(--container-bg);
+            padding: 35px 35px 20px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-main);
             max-width: 600px;
             width: 90%;
-            position: relative;
+            /* position: relative; -- Już prawdopodobnie niepotrzebne */
             animation: fadeIn 1s ease;
         }
         .radio-container h1 {
-            margin-bottom: 10px; /* Zmniejszono odstęp */
-            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 32px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #f4f4f4;
+            color: var(--text-primary);
         }
         .radio-container p {
-            margin-bottom: 10px; /* Zmniejszono odstęp */
-            font-size: 16px;
-            color: #dcdcdc;
+            margin-bottom: 15px;
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
         iframe {
-            margin-top: 10px; /* Dodano odstęp powyżej playera */
+            margin-top: 15px; /* Dodano odstęp powyżej playera */
             width: 100%;
             min-height: 150px;
             border: 0;
-            border-radius: 10px;
-            animation: glow 2s infinite alternate;
+            border-radius: var(--border-radius-main);
+            /* animation: glow 2s infinite alternate; -- Removed for cleaner look */
         }
         footer {
             font-size: 14px;
-            color: #bbb;
+            color: var(--text-secondary);
             text-align: center;
-            margin-top: 20px;
-            position: absolute;
-            bottom: 10px;
+            padding: 20px; /* Zwiększony padding dla lepszego wyglądu */
             width: 100%;
+            box-sizing: border-box; /* Padding wliczony w szerokość */
+            /* Opcjonalnie: lekkie tło dla stopki, np. background: rgba(10,10,12,0.7); */
         }
         footer a {
-            color: #fff;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: bold;
         }
         footer a:hover {
             text-decoration: underline;
         }
-        @keyframes glow {
+        /* @keyframes glow {
             from {
                 box-shadow: 0 0 10px #0066ff;
             }
             to {
                 box-shadow: 0 0 20px #3399ff;
             }
-        }
+        } */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -86,7 +113,7 @@
         }
         .history-button {
             margin-top: 15px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.15));
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 12px 25px;
@@ -94,7 +121,7 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 14px;
-            text-transform: uppercase;
+            text-transform: none; /* Adjusted for a softer look, can be uppercase if preferred */
             letter-spacing: 1.5px;
             font-weight: 500;
             backdrop-filter: blur(10px);
@@ -111,7 +138,7 @@
         }
 
         .history-button:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.25));
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3),
                         0 0 15px rgba(255, 255, 255, 0.1);
@@ -128,27 +155,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85); /* Slightly darker backdrop */
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out;
         }
         .modal.show {
             opacity: 1;
         }
         .modal-content {
             position: relative;
-            top: 50%;
+            top: 50%; /* Centering handled by transform */
             left: 50%;
-            transform: translate(-50%, -55%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            border-radius: 15px;
+            transform: translate(-50%, -50%) scale(0.95); /* Start slightly smaller for pop effect */
+            background: var(--modal-bg);
+            padding: 25px;
+            border-radius: var(--border-radius-large);
             width: 80%;
             max-width: 800px;
             max-height: 80vh;
             opacity: 0;
-            transition: all 0.4s ease;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .modal.show .modal-content {
             transform: translate(-50%, -50%);
@@ -158,8 +185,8 @@
             position: absolute;
             top: -15px;
             right: -15px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
             width: 35px;
             height: 35px;
@@ -172,55 +199,82 @@
             font-size: 18px;
         }
         .close-button:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             transform: rotate(90deg);
         }
         .history-iframe {
             width: 100%;
             height: 70vh;
             border: none;
-            border-radius: 10px;
+            border-radius: var(--border-radius-main);
+            display: none; /* Początkowo ukryty, pokażemy po załadowaniu */
         }
-        .invert-iframe {
-            filter: invert(1) hue-rotate(180deg);
-            background: #fff !important;
-            color: #111 !important;
+        /* Usunięto .invert-iframe - polegamy na ?theme=light z src iframa */
+        .history-iframe-container { /* Kontener dla iframe i wiadomości o ładowaniu */
+            position: relative;
+            min-height: 150px; /* Minimalna wysokość, aby wiadomość o ładowaniu była widoczna */
+        }
+        .history-loading-message {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 20px;
+            font-size: 16px;
+            display: block; /* Początkowo widoczny */
         }
     </style>
 </head>
 <body>
-    <div class="radio-container">
-        <h1>Radio Wojtoteka</h1>
-        <p>Życzymy miłych wrażeń z słuchania</p>
-        <iframe src="https://fm.wojtoteka.ovh/public/radio/embed?theme=dark" 
-                frameborder="0" 
-                allowtransparency="true">
-        </iframe>
-        <button class="history-button" onclick="showHistory()">Historia Odtwarzania</button>
+    <div class="main-content-wrapper">
+        <div class="radio-container">
+            <h1>Radio Wojtoteka</h1>
+            <p>Życzymy miłych wrażeń podczas słuchania!</p>
+            <iframe src="https://fm.wojtoteka.ovh/public/radio/embed?theme=dark"
+                    frameborder="0"
+                    allowtransparency="true">
+            </iframe>
+            <button class="history-button" onclick="showHistory()">Historia Odtwarzania</button>
+        </div>
     </div>
-    
+
     <div id="historyModal" class="modal">
         <div class="modal-content">
-            <button class="close-button" onclick="hideHistory()">&times;</button>
-            <iframe class="history-iframe invert-iframe" 
-                    src="https://fm.wojtoteka.ovh/public/radio/history?theme=light" 
-                    frameborder="0">
-            </iframe>
+            <button class="close-button" onclick="hideHistory()" aria-label="Zamknij">&times;</button>
+            <div class="history-iframe-container">
+                <p class="history-loading-message">Ładowanie historii...</p>
+                <iframe id="historyPlayerIframe" class="history-iframe"
+                        src="https://fm.wojtoteka.ovh/public/radio/history?theme=dark"
+                        frameborder="0"
+                        onload="onHistoryIframeLoad()">
+                </iframe>
+            </div>
         </div>
     </div>
 
     <footer>
-        Stworzone przez <a href="https://wojtoteka.ovh/">Wojtoteka</a>
+        &copy; <span id="current-year"></span> Stworzone przez <a href="https://wojtoteka.ovh/">Wojtoteka</a>
     </footer>
 
     <script>
+        const historyModal = document.getElementById('historyModal');
+        const historyIframe = document.getElementById('historyPlayerIframe');
+        const historyLoadingMessage = historyModal.querySelector('.history-loading-message');
+
         function showHistory() {
-            const modal = document.getElementById('historyModal');
-            modal.style.display = 'block';
+            historyModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
-            // Trigger reflow
-            modal.offsetHeight;
-            modal.classList.add('show');
+
+            // Pokaż loader, ukryj iframe (na wypadek ponownego otwarcia)
+            if (historyLoadingMessage) historyLoadingMessage.style.display = 'block';
+            if (historyIframe) {
+                historyIframe.style.display = 'none';
+                // Wymuś przeładowanie iframe'a, aby zdarzenie 'onload' zostało wywołane za każdym razem.
+                // Ponowne ustawienie atrybutu src (nawet na tę samą wartość) powinno zainicjować ładowanie.
+                historyIframe.src = historyIframe.getAttribute('src');
+            }
+
+            // Trigger reflow to ensure transition plays
+            historyModal.offsetHeight;
+            historyModal.classList.add('show');
         }
 
         function hideHistory() {
@@ -229,7 +283,15 @@
             document.body.style.overflow = 'auto';
             setTimeout(() => {
                 modal.style.display = 'none';
-            }, 300);
+                // Opcjonalnie: zresetuj stan loadera/iframe po zamknięciu, aby przy następnym otwarciu ładowanie było widoczne
+                // if (historyLoadingMessage) historyLoadingMessage.style.display = 'block';
+                // if (historyIframe) historyIframe.style.display = 'none';
+            }, 300); // Corresponds to transition duration
+        }
+
+        function onHistoryIframeLoad() {
+            if (historyLoadingMessage) historyLoadingMessage.style.display = 'none';
+            if (historyIframe) historyIframe.style.display = 'block';
         }
 
         // Add event listener for ESC key
@@ -237,6 +299,12 @@
             if (event.key === 'Escape') {
                 hideHistory();
             }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const yearSpan = document.getElementById('current-year');
+            const currentYear = new Date().getFullYear();
+            yearSpan.textContent = currentYear;
         });
     </script>
 </body>
