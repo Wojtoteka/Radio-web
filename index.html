@@ -16,6 +16,8 @@
             --text-secondary: #b0b0b0;
             --accent-color: #007bff;
             --accent-hover: #0056b3;
+            --warning-color: #ff6b6b;
+            --warning-bg: rgba(255, 107, 107, 0.15);
             --font-family-main: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             --border-radius-main: 12px;
             --border-radius-large: 15px;
@@ -27,19 +29,45 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column; /* Układa elementy (main-content-wrapper i footer) w kolumnie */
-            min-height: 100vh;     /* Minimalna wysokość body to cała wysokość ekranu */
+            flex-direction: column;
+            min-height: 100vh;
             background: var(--bg-url) no-repeat center center/cover;
             font-family: var(--font-family-main);
             color: var(--text-primary);
         }
+
+        .warning-banner {
+            background: linear-gradient(135deg, var(--warning-bg), rgba(255, 107, 107, 0.25));
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+            text-align: center;
+            padding: 15px 20px;
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 100;
+        }
+
+        .warning-banner::before {
+            content: "⚠️";
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
         .main-content-wrapper {
-            flex-grow: 1; /* Pozwala tej sekcji zająć dostępną przestrzeń pionową */
+            flex-grow: 1;
             display: flex;
-            justify-content: center; /* Centruje .radio-container w poziomie */
-            align-items: center;     /* Centruje .radio-container w pionie */
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            padding: 20px 0; /* Dodaje trochę przestrzeni na górze i na dole, jeśli kontener jest wysoki */
+            padding: 20px 0;
         }
 
         .radio-container {
@@ -50,9 +78,27 @@
             box-shadow: var(--shadow-main);
             max-width: 600px;
             width: 90%;
-            /* position: relative; -- Już prawdopodobnie niepotrzebne */
             animation: fadeIn 1s ease;
+            position: relative;
         }
+
+        .shutdown-notice {
+            background: linear-gradient(135deg, var(--warning-bg), rgba(255, 107, 107, 0.1));
+            border: 1px solid var(--warning-color);
+            border-radius: var(--border-radius-main);
+            padding: 15px;
+            margin-bottom: 20px;
+            color: var(--warning-color);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .shutdown-notice strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
         .radio-container h1 {
             margin-top: 0;
             margin-bottom: 12px;
@@ -69,21 +115,19 @@
             line-height: 1.6;
         }
         iframe {
-            margin-top: 15px; /* Dodano odstęp powyżej playera */
+            margin-top: 15px;
             width: 100%;
             min-height: 150px;
             border: 0;
             border-radius: var(--border-radius-main);
-            /* animation: glow 2s infinite alternate; -- Removed for cleaner look */
         }
         footer {
             font-size: 14px;
             color: var(--text-secondary);
             text-align: center;
-            padding: 20px; /* Zwiększony padding dla lepszego wyglądu */
+            padding: 20px;
             width: 100%;
-            box-sizing: border-box; /* Padding wliczony w szerokość */
-            /* Opcjonalnie: lekkie tło dla stopki, np. background: rgba(10,10,12,0.7); */
+            box-sizing: border-box;
         }
         footer a {
             color: var(--text-primary);
@@ -93,14 +137,6 @@
         footer a:hover {
             text-decoration: underline;
         }
-        /* @keyframes glow {
-            from {
-                box-shadow: 0 0 10px #0066ff;
-            }
-            to {
-                box-shadow: 0 0 20px #3399ff;
-            }
-        } */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -121,7 +157,7 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 14px;
-            text-transform: none; /* Adjusted for a softer look, can be uppercase if preferred */
+            text-transform: none;
             letter-spacing: 1.5px;
             font-weight: 500;
             backdrop-filter: blur(10px);
@@ -155,7 +191,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85); /* Slightly darker backdrop */
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
@@ -165,9 +201,9 @@
         }
         .modal-content {
             position: relative;
-            top: 50%; /* Centering handled by transform */
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.95); /* Start slightly smaller for pop effect */
+            transform: translate(-50%, -50%) scale(0.95);
             background: var(--modal-bg);
             padding: 25px;
             border-radius: var(--border-radius-large);
@@ -207,25 +243,111 @@
             height: 70vh;
             border: none;
             border-radius: var(--border-radius-main);
-            display: none; /* Początkowo ukryty, pokażemy po załadowaniu */
+            display: none;
         }
-        /* Usunięto .invert-iframe - polegamy na ?theme=light z src iframa */
-        .history-iframe-container { /* Kontener dla iframe i wiadomości o ładowaniu */
+        .history-iframe-container {
             position: relative;
-            min-height: 150px; /* Minimalna wysokość, aby wiadomość o ładowaniu była widoczna */
+            min-height: 150px;
         }
         .history-loading-message {
             color: var(--text-secondary);
             text-align: center;
             padding: 20px;
             font-size: 16px;
-            display: block; /* Początkowo widoczny */
+            display: block;
+        }
+
+        /* Modal ostrzeżenia */
+        .warning-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .warning-modal.show {
+            opacity: 1;
+        }
+
+        .warning-modal-content {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--modal-bg);
+            padding: 30px;
+            border-radius: var(--border-radius-large);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 2px solid var(--warning-color);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .warning-modal.show .warning-modal-content {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        .warning-modal h2 {
+            color: var(--warning-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .warning-modal h2::before {
+            content: "⚠️";
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .warning-modal p {
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .warning-modal-button {
+            background: linear-gradient(135deg, var(--warning-color), #ff5252);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .warning-modal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
     </style>
 </head>
 <body>
+    <!-- Banner ostrzeżenia na górze strony -->
+    <div class="warning-banner">
+        Radio Wojtoteka zostanie trwale wyłączone dnia 19 października 2025
+    </div>
+
     <div class="main-content-wrapper">
         <div class="radio-container">
+            <!-- Dodatkowe ostrzeżenie w kontenerze -->
+            <div class="shutdown-notice">
+                <strong>📻 Uwaga!</strong>
+                Radio Wojtoteka kończy swoją działalność 19.10.2025. Dziękujemy za wszystkie lata wsparcia!
+            </div>
+
             <h1>Radio Wojtoteka</h1>
             <p>Życzymy miłych wrażeń podczas słuchania!</p>
             <iframe src="https://fm.wojtoteka.ovh/public/radio/embed?theme=dark"
@@ -233,6 +355,23 @@
                     allowtransparency="true">
             </iframe>
             <button class="history-button" onclick="showHistory()">Historia Odtwarzania</button>
+        </div>
+    </div>
+
+    <!-- Modal ostrzeżenia przy wejściu -->
+    <div id="warningModal" class="warning-modal">
+        <div class="warning-modal-content">
+            <h2>Ważne ogłoszenie</h2>
+            <p>
+                Radio Wojtoteka po wielu latach działalności zakończy swoją emisję <strong>19 października 2025</strong>.
+                <br><br>
+                Dziękujemy wszystkim słuchaczom za wsparcie i miłe chwile spędzone przy naszej muzyce.
+                <br><br>
+                Zapraszamy do ostatnich tygodni słuchania!
+            </p>
+            <button class="warning-modal-button" onclick="closeWarningModal()">
+                Rozumiem
+            </button>
         </div>
     </div>
 
@@ -258,21 +397,19 @@
         const historyModal = document.getElementById('historyModal');
         const historyIframe = document.getElementById('historyPlayerIframe');
         const historyLoadingMessage = historyModal.querySelector('.history-loading-message');
+        const warningModal = document.getElementById('warningModal');
 
+        // Funkcje dla historii
         function showHistory() {
             historyModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
 
-            // Pokaż loader, ukryj iframe (na wypadek ponownego otwarcia)
             if (historyLoadingMessage) historyLoadingMessage.style.display = 'block';
             if (historyIframe) {
                 historyIframe.style.display = 'none';
-                // Wymuś przeładowanie iframe'a, aby zdarzenie 'onload' zostało wywołane za każdym razem.
-                // Ponowne ustawienie atrybutu src (nawet na tę samą wartość) powinno zainicjować ładowanie.
                 historyIframe.src = historyIframe.getAttribute('src');
             }
 
-            // Trigger reflow to ensure transition plays
             historyModal.offsetHeight;
             historyModal.classList.add('show');
         }
@@ -283,10 +420,7 @@
             document.body.style.overflow = 'auto';
             setTimeout(() => {
                 modal.style.display = 'none';
-                // Opcjonalnie: zresetuj stan loadera/iframe po zamknięciu, aby przy następnym otwarciu ładowanie było widoczne
-                // if (historyLoadingMessage) historyLoadingMessage.style.display = 'block';
-                // if (historyIframe) historyIframe.style.display = 'none';
-            }, 300); // Corresponds to transition duration
+            }, 300);
         }
 
         function onHistoryIframeLoad() {
@@ -294,10 +428,28 @@
             if (historyIframe) historyIframe.style.display = 'block';
         }
 
-        // Add event listener for ESC key
+        // Funkcje dla modal ostrzeżenia
+        function showWarningModal() {
+            warningModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            warningModal.offsetHeight;
+            warningModal.classList.add('show');
+        }
+
+        function closeWarningModal() {
+            warningModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => {
+                warningModal.style.display = 'none';
+            }, 300);
+        }
+
+        // Event listeners
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 hideHistory();
+                closeWarningModal();
             }
         });
 
@@ -305,6 +457,11 @@
             const yearSpan = document.getElementById('current-year');
             const currentYear = new Date().getFullYear();
             yearSpan.textContent = currentYear;
+
+            // Pokaż modal ostrzeżenia po załadowaniu strony
+            setTimeout(() => {
+                showWarningModal();
+            }, 1000); // Opóźnienie 1 sekunda dla lepszego efektu
         });
     </script>
 </body>
